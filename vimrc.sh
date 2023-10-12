@@ -1,5 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+syntax on
+set encoding=UTF-8
+
+let g:NERDTreeNodeDelimiter = "\u00a0"
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -26,8 +30,10 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
+" Plugins for fuzzy finding
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+ All of your Plugins must be added before the following line
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'
@@ -62,9 +68,11 @@ set noexpandtab
 " swp files moved to a different folder
 set directory^=$HOME/.vim/tmp/
 
+" Copy to system clipboard instead of copying to unammed register
+set clipboard=unnamedplus
+
 " Nerdtree
 set splitright
 set splitbelow
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endif
-

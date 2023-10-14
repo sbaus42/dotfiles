@@ -33,7 +33,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Plugins for fuzzy finding
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
- All of your Plugins must be added before the following line
+" All of your Plugins must be added before the following line
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'

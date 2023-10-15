@@ -33,6 +33,8 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Plugins for fuzzy finding
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+" Smooth scrolling
+Plugin 'psliwka/vim-smoothie'
 " All of your Plugins must be added before the following line
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
@@ -76,3 +78,9 @@ set splitright
 set splitbelow
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endif
+" Reveal in finder the current selected file
+nmap <C-S-\> :NERDTreeFind<CR>
+nmap <C-\> :NERDTreeToggle<CR>
+
+" Some indentation rules, commented because I'm not so sure about using them
+" set listchars=eol:↓,tab:\ \ ┊,trail:●,extends:…,precedes:…,space:·

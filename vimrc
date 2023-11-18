@@ -36,6 +36,7 @@ Plugin 'junegunn/fzf.vim'
 " Smooth scrolling
 Plugin 'psliwka/vim-smoothie'
 " All of your Plugins must be added before the following line
+Plugin 'godlygeek/tabular' " Tabularize
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kien/ctrlp.vim'
@@ -84,3 +85,7 @@ nmap <C-\> :NERDTreeToggle<CR>
 
 " Some indentation rules, commented because I'm not so sure about using them
 " set listchars=eol:↓,tab:\ \ ┊,trail:●,extends:…,precedes:…,space:·
+
+" Let ctrl + p looking into hidden files
+let g:ctrlp_show_hidden=1
+

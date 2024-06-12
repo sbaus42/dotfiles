@@ -40,3 +40,5 @@ Vertical move: '-` and `+`
 - How to create a toggle command. e.g. Make it so when I press some combination of
 keys, I can see the whitespace characters and when I press it again, it goes back
 to how things were. (set listchars=eol:↓,tab:\ \ ┊,trail:●,extends:…,precedes:…,space:·)
+
+And that's that

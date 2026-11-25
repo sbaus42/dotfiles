@@ -14,6 +14,7 @@ WHOLE_DIRS=(.config/nvim)
 BACKUP="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 
 SKIP_BREW=false
+BREW_FAILED=false
 [[ "${1:-}" == "--no-brew" ]] && SKIP_BREW=true
 
 say() { printf '\n\033[1;35m==> %s\033[0m\n' "$*"; }
@@ -45,7 +46,11 @@ if ! $SKIP_BREW; then
     brew trust --tap "$tap"
   done
   say "Installing Homebrew packages (Brewfile)"
-  brew bundle --file "$DOTFILES/Brewfile"
+  # A single failing package must not stop the dotfiles from being linked
+  if ! brew bundle --file "$DOTFILES/Brewfile"; then
+    BREW_FAILED=true
+    echo "  some packages failed — see above; the rest of the setup continues"
+  fi
 else
   [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -82,6 +87,11 @@ for tpm in /opt/homebrew/opt/tpm/share/tpm "$HOME/.tmux/plugins/tpm"; do
 done
 
 # 5. Reminders ------------------------------------------------------------------
+if $BREW_FAILED; then
+  say "Some Homebrew packages did not install. List what's missing with:"
+  echo "  brew bundle check --verbose --file $DOTFILES/Brewfile"
+fi
+
 say "Done. Remaining manual steps:"
 cat <<'EOF'
   - Copy private files from the old machine (not in this public repo):

@@ -50,7 +50,6 @@ brew "automake"
 brew "libtool"
 brew "libyaml"
 brew "pkgconf"
-brew "openssl@1.1"
 
 # --- Infra / Kubernetes ---
 brew "helm"

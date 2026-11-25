@@ -9,13 +9,13 @@ My macOS setup: zsh, tmux, oh-my-posh, neovim (NvChad) and alacritty, plus a
    ```sh
    xcode-select --install
    ```
-2. **Clone this repo** to `~/dotfiles` (HTTPS works before any SSH keys exist):
+2. **Clone this repo** to `~/.dotfiles` (HTTPS works before any SSH keys exist):
    ```sh
-   git clone https://github.com/sbaus42/dotfiles.git ~/dotfiles
+   git clone https://github.com/sbaus42/dotfiles.git ~/.dotfiles
    ```
 3. **Run the installer**:
    ```sh
-   ~/dotfiles/install.sh
+   ~/.dotfiles/install.sh
    ```
    It installs Homebrew if needed, installs everything in the `Brewfile`,
    links the config files into your home folder (see "How the linking works"),
@@ -25,7 +25,7 @@ My macOS setup: zsh, tmux, oh-my-posh, neovim (NvChad) and alacritty, plus a
    because it's public):
    - `~/.zshrc.local`: work settings (Vault, cluster aliases), loaded at the end of `.zshrc`
    - `~/.zsh_functions/`: work shell functions
-   - `~/.ssh/`: keys and config (then `git -C ~/dotfiles remote set-url origin git@github.com:sbaus42/dotfiles.git`)
+   - `~/.ssh/`: keys and config (then `git -C ~/.dotfiles remote set-url origin git@github.com:sbaus42/dotfiles.git`)
    - `~/.config/vault/`
 5. **Install by hand** what Homebrew doesn't cover: Docker Desktop,
    Google Cloud SDK (into `/opt/google-cloud-sdk`), sdkman, and the Ruby
@@ -36,7 +36,7 @@ My macOS setup: zsh, tmux, oh-my-posh, neovim (NvChad) and alacritty, plus a
 ### Switching an existing Mac to this repo
 Same thing, but skip Homebrew if your packages are already installed:
 ```sh
-~/dotfiles/install.sh --no-brew
+~/.dotfiles/install.sh --no-brew
 ```
 Your current config files are moved to `~/.dotfiles-backup/<date>/` and
 replaced with links to this repo.
@@ -54,22 +54,22 @@ they should appear in your home folder:
 | `alacritty` | `~/.config/alacritty/alacritty.toml` (opens tmux)   |
 
 `stow` doesn't copy anything. It creates **symlinks** (shortcuts): `~/.zshrc`
-becomes a link pointing to `~/dotfiles/zsh/.zshrc`. That means:
+becomes a link pointing to `~/.dotfiles/zsh/.zshrc`. That means:
 
-- **Editing** `~/.zshrc` (or `~/dotfiles/zsh/.zshrc`, same file) changes the repo
+- **Editing** `~/.zshrc` (or `~/.dotfiles/zsh/.zshrc`, same file) changes the repo
   directly. Commit and push as usual to save it.
-- **Getting updates** on another machine is just `git -C ~/dotfiles pull`.
+- **Getting updates** on another machine is just `git -C ~/.dotfiles pull`.
   The links already point at the repo, so there's nothing to re-run.
 - **Adding a new file**: put it in the right package with the same path it
-  should have under `~`, then run `cd ~/dotfiles && stow <package>` (or re-run
+  should have under `~`, then run `cd ~/.dotfiles && stow <package>` (or re-run
   `install.sh`). Example: `~/.config/foo/bar.toml` goes in `foo/.config/foo/bar.toml`.
-- **Removing the links** for a package: `cd ~/dotfiles && stow -D <package>`.
+- **Removing the links** for a package: `cd ~/.dotfiles && stow -D <package>`.
 - **See where a link points**: `ls -l ~/.zshrc`.
 
 ## Homebrew packages
 `Brewfile` lists every package. After installing something new you want to keep,
-add it there. `brew bundle --file ~/dotfiles/Brewfile` installs anything missing,
-and `brew bundle check --file ~/dotfiles/Brewfile` shows what isn't installed yet.
+add it there. `brew bundle --file ~/.dotfiles/Brewfile` installs anything missing,
+and `brew bundle check --file ~/.dotfiles/Brewfile` shows what isn't installed yet.
 
 ## Things I'm learning along the way
 

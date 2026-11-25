@@ -1,4 +1,4 @@
-# Install everything with:  brew bundle --file ~/dotfiles/Brewfile
+# Install everything with:  brew bundle --file ~/.dotfiles/Brewfile
 # (install.sh runs this for you)
 
 tap "jandedobbeleer/oh-my-posh"

@@ -9,20 +9,25 @@ whose contents mirror `$HOME`:
 | `zsh`      | `~/.zshrc`, `~/.zprofile`, `~/.zsh_aliases` |
 | `tmux`     | `~/.tmux.conf`                        |
 | `ohmyposh` | `~/.config/ohmyposh/zen.toml`         |
+| `nvim`     | `~/.config/nvim` (NvChad v2.5 starter + customisations) |
+| `alacritty`| `~/.config/alacritty/alacritty.toml` (starts tmux) |
 
 ```sh
 brew install stow
-cd ~/dotfiles && stow zsh tmux ohmyposh
+cd ~/dotfiles && stow zsh tmux ohmyposh nvim alacritty
 ```
 
 ### Not in this repo (public!)
 Work / machine-specific config goes in `~/.zshrc.local` (sourced last by `.zshrc`)
 and `~/.zsh_functions/*.zsh`. Copy those by hand.
 
-## Requirements (zsh + tmux)
+## Requirements
 - zsh (zinit bootstraps itself on first start)
 - oh-my-posh, fzf (`brew install oh-my-posh fzf`)
 - tmux + tpm (`brew install tmux tpm`), then `prefix + I` to install plugins
+- neovim, alacritty, JetBrainsMono Nerd Font
+  (`brew install neovim ripgrep && brew install --cask alacritty font-jetbrains-mono-nerd-font`)
+- nvim: plugins install on first launch; solargraph is expected at `~/.rbenv/versions/3.3.8/bin/solargraph`
 - Optional, lazy/guarded: rbenv, nvm, sdkman, google-cloud-sdk in `/opt/google-cloud-sdk`
 
 ## Things I'm learning along the way

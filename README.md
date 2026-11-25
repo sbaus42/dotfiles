@@ -1,34 +1,75 @@
 # dotfiles
 
-## Layout
-Each top-level folder is a [GNU stow](https://www.gnu.org/software/stow/) package
-whose contents mirror `$HOME`:
+My macOS setup: zsh, tmux, oh-my-posh, neovim (NvChad) and alacritty, plus a
+`Brewfile` with every Homebrew package I use.
 
-| Package    | Installs                              |
-|------------|---------------------------------------|
-| `zsh`      | `~/.zshrc`, `~/.zprofile`, `~/.zsh_aliases` |
-| `tmux`     | `~/.tmux.conf`                        |
-| `ohmyposh` | `~/.config/ohmyposh/zen.toml`         |
-| `nvim`     | `~/.config/nvim` (NvChad v2.5 starter + customisations) |
-| `alacritty`| `~/.config/alacritty/alacritty.toml` (starts tmux) |
+## Setting up a new Mac
 
+1. **Install Apple's command line tools** (this gives you `git`):
+   ```sh
+   xcode-select --install
+   ```
+2. **Clone this repo** to `~/dotfiles` (HTTPS works before any SSH keys exist):
+   ```sh
+   git clone https://github.com/sbaus42/dotfiles.git ~/dotfiles
+   ```
+3. **Run the installer**:
+   ```sh
+   ~/dotfiles/install.sh
+   ```
+   It installs Homebrew if needed, installs everything in the `Brewfile`,
+   links the config files into your home folder (see "How the linking works"),
+   and installs the tmux plugins. Any file it would replace is moved to
+   `~/.dotfiles-backup/<date>/` first, so nothing is lost. It is safe to run again.
+4. **Copy the private files** from the old machine (they are not in this repo,
+   because it's public):
+   - `~/.zshrc.local`: work settings (Vault, cluster aliases), loaded at the end of `.zshrc`
+   - `~/.zsh_functions/`: work shell functions
+   - `~/.ssh/`: keys and config (then `git -C ~/dotfiles remote set-url origin git@github.com:sbaus42/dotfiles.git`)
+   - `~/.config/vault/`
+5. **Install by hand** what Homebrew doesn't cover: Docker Desktop,
+   Google Cloud SDK (into `/opt/google-cloud-sdk`), sdkman, and the Ruby
+   version nvim's solargraph expects (`rbenv install 3.3.8 && gem install solargraph`).
+6. **Open a new terminal.** zsh plugins download on the first start, and
+   neovim plugins download the first time you run `nvim`.
+
+### Switching an existing Mac to this repo
+Same thing, but skip Homebrew if your packages are already installed:
 ```sh
-brew install stow
-cd ~/dotfiles && stow zsh tmux ohmyposh nvim alacritty
+~/dotfiles/install.sh --no-brew
 ```
+Your current config files are moved to `~/.dotfiles-backup/<date>/` and
+replaced with links to this repo.
 
-### Not in this repo (public!)
-Work / machine-specific config goes in `~/.zshrc.local` (sourced last by `.zshrc`)
-and `~/.zsh_functions/*.zsh`. Copy those by hand.
+## How the linking works (GNU stow)
+Each top-level folder is a *package*. Inside it, files are laid out exactly as
+they should appear in your home folder:
 
-## Requirements
-- zsh (zinit bootstraps itself on first start)
-- oh-my-posh, fzf (`brew install oh-my-posh fzf`)
-- tmux + tpm (`brew install tmux tpm`), then `prefix + I` to install plugins
-- neovim, alacritty, JetBrainsMono Nerd Font
-  (`brew install neovim ripgrep && brew install --cask alacritty font-jetbrains-mono-nerd-font`)
-- nvim: plugins install on first launch; solargraph is expected at `~/.rbenv/versions/3.3.8/bin/solargraph`
-- Optional, lazy/guarded: rbenv, nvm, sdkman, google-cloud-sdk in `/opt/google-cloud-sdk`
+| Package     | Ends up as                                          |
+|-------------|-----------------------------------------------------|
+| `zsh`       | `~/.zshrc`, `~/.zprofile`, `~/.zsh_aliases`         |
+| `tmux`      | `~/.tmux.conf`                                      |
+| `ohmyposh`  | `~/.config/ohmyposh/` (prompt theme)                |
+| `nvim`      | `~/.config/nvim/` (NvChad v2.5 + my changes)        |
+| `alacritty` | `~/.config/alacritty/alacritty.toml` (opens tmux)   |
+
+`stow` doesn't copy anything. It creates **symlinks** (shortcuts): `~/.zshrc`
+becomes a link pointing to `~/dotfiles/zsh/.zshrc`. That means:
+
+- **Editing** `~/.zshrc` (or `~/dotfiles/zsh/.zshrc`, same file) changes the repo
+  directly. Commit and push as usual to save it.
+- **Getting updates** on another machine is just `git -C ~/dotfiles pull`.
+  The links already point at the repo, so there's nothing to re-run.
+- **Adding a new file**: put it in the right package with the same path it
+  should have under `~`, then run `cd ~/dotfiles && stow <package>` (or re-run
+  `install.sh`). Example: `~/.config/foo/bar.toml` goes in `foo/.config/foo/bar.toml`.
+- **Removing the links** for a package: `cd ~/dotfiles && stow -D <package>`.
+- **See where a link points**: `ls -l ~/.zshrc`.
+
+## Homebrew packages
+`Brewfile` lists every package. After installing something new you want to keep,
+add it there. `brew bundle --file ~/dotfiles/Brewfile` installs anything missing,
+and `brew bundle check --file ~/dotfiles/Brewfile` shows what isn't installed yet.
 
 ## Things I'm learning along the way
 

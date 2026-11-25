@@ -1,21 +1,29 @@
 # dotfiles
 
-## TODO
-Make a script that sets up everything in this repository. This means installing
-everything that needs to be installed (check dependencies and install them too),
-copies the files where they should be (or maybe create symlinks?) and leaves
-everything ready to simply use. For now it's safe to assume it will be a new
-installation and nothing exists, if something does, good luck.
+## Layout
+Each top-level folder is a [GNU stow](https://www.gnu.org/software/stow/) package
+whose contents mirror `$HOME`:
 
-## Requirements
-To have a fully functioning set up you'll need the following programs installed:
-- git: To install zsh, vundle and many more things
-- cmake: For youcompleteme (vim plugin)
-- vim-gtk: Or gtk3. This ensures vim is compiled with python or python3
-- python: For everything pretty much
-- curl: To install oh-my-zsh
-- zsh: For obvious reasons
-- tmux: Also pretty obvious
+| Package    | Installs                              |
+|------------|---------------------------------------|
+| `zsh`      | `~/.zshrc`, `~/.zprofile`, `~/.zsh_aliases` |
+| `tmux`     | `~/.tmux.conf`                        |
+| `ohmyposh` | `~/.config/ohmyposh/zen.toml`         |
+
+```sh
+brew install stow
+cd ~/dotfiles && stow zsh tmux ohmyposh
+```
+
+### Not in this repo (public!)
+Work / machine-specific config goes in `~/.zshrc.local` (sourced last by `.zshrc`)
+and `~/.zsh_functions/*.zsh`. Copy those by hand.
+
+## Requirements (zsh + tmux)
+- zsh (zinit bootstraps itself on first start)
+- oh-my-posh, fzf (`brew install oh-my-posh fzf`)
+- tmux + tpm (`brew install tmux tpm`), then `prefix + I` to install plugins
+- Optional, lazy/guarded: rbenv, nvm, sdkman, google-cloud-sdk in `/opt/google-cloud-sdk`
 
 ## Things I'm learning along the way
 

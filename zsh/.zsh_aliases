@@ -1,0 +1,5 @@
+alias gco="git checkout"
+alias gstat="git status"
+alias dco="docker-compose"
+alias ls="ls --color"
+alias vim=nvim
